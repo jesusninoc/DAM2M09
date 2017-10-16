@@ -19,7 +19,7 @@ import java.util.Scanner;
  *
  * @author alumne
  */
-public class streams {
+public class Streams {
 
     
     
@@ -44,7 +44,7 @@ public class streams {
     public static void main(String[] args) {
                
         /* application object */
-	streams myAp = new streams();
+	Streams myAp = new Streams();
 	/* run the application */
 	myAp.run();
 		
