@@ -6,8 +6,17 @@ import java.io.EOFException;
 import java.net.*;
 import java.util.*;
 
+/**
+ *
+ * @author alumne
+ */
 public class ClientChat {
 
+    /**
+     *
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         Scanner scan = new Scanner(System.in);
 
