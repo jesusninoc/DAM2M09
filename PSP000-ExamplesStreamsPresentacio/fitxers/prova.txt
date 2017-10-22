@@ -1,0 +1,3 @@
+aquest es un text per provar
+com funciona la lectura escritura
+d'un stream
