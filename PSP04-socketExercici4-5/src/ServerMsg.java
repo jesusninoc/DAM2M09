@@ -10,7 +10,7 @@ public class ServerMsg {
         ServerSocket server = new ServerSocket(7000);
         System.out.println("Server is started");
         while (true) {
-            System.out.println("Servidor esperant connexió dels clients....");
+            System.out.println("Esperant nou client...");
             Socket socket = server.accept();
             System.out.println("Usuari connectat des de la IP: " + socket.getRemoteSocketAddress());
 
