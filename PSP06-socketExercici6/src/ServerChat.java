@@ -31,7 +31,7 @@ public class ServerChat {
             System.out.println("Esperant nou client... ");
             Socket socket = server.accept();
 
-            System.out.println("Client connectat: " + socket.getLocalAddress() + ":" + socket.getPort());
+            System.out.println("Client connectat: " + socket.getRemoteSocketAddress());
 
             try {
                 // input stream per rebre missatges del client
