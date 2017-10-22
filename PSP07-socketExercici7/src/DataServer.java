@@ -59,7 +59,7 @@ public class DataServer {
 
                 try {
 
-                    while (!".".equalsIgnoreCase(ordre)) {
+                    while (!".".equals(ordre)) {
 
                         // Mostrem el menú i demanem ordre per teclat
                         ordre = demanaOrdre();
@@ -67,7 +67,7 @@ public class DataServer {
                         // Enviem l'ordre al client
                         dos.writeUTF(ordre);
 
-                        if (!".".equalsIgnoreCase(ordre)) {
+                        if (!".".equals(ordre)) {
                             // Rebrem la dada del client i la mostrarem per pantalla
                             // Depenent de l'ordre rebrem un tipus de dada o un altre
                             switch (ordre) {
