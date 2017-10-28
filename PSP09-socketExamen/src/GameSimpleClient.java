@@ -20,7 +20,8 @@ public class GameSimpleClient {
         String entradaTeclat;
         String respostaServidor;
 
-        System.out.println("Test Game Server");
+        System.out.println("Game Simple Client");
+        System.out.println("==================\n");
 
         //Instanciem Scanner per llegir de l'entrada estandar 
         Scanner scan = new Scanner(System.in);
@@ -29,7 +30,7 @@ public class GameSimpleClient {
             //iniciem el socket, indicant la IP del servidor i el port del servidor
             //obtinguts del fitxer de configuració
             Socket socket = new Socket("localhost", 7000);
-            System.out.println("## connexió correcta");
+            
             try {
                 // output stream per enviar missatges al servidor
                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
@@ -55,11 +56,11 @@ public class GameSimpleClient {
                 System.out.println("Fi de connexió");
 
             } catch (SocketException | EOFException ex) {
-                System.out.println("ERROR: Servidor desconnectat" + ex);
+                System.out.println("ERROR: Servidor desconnectat");
             }
 
         } catch (SocketException ex) {
-            System.out.println("ERROR: No s'ha trobat el servidor" + ex);
+            System.out.println("ERROR: No s'ha trobat el servidor");
         }
 
     }

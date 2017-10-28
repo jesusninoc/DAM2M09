@@ -29,8 +29,8 @@ public class GamePlayerClient {
         String gameIP;
         int gamePort;
 
-        System.out.println("Play Game");
-        System.out.println("=========\n");
+        System.out.println("Joc");
+        System.out.println("===\n");
 
         //obtenim la ip i el port d'un fitxer de configuracio
         if (!new File(rutaConfigFile).isFile()) {
@@ -62,7 +62,7 @@ public class GamePlayerClient {
 
                         do {
                             //Demanem al usuari un numero per participar
-                            System.out.println("Endevina on está el premi, de 0 a 9 (. per sortir)");
+                            System.out.println("Endevina on està el premi, de 0 a 9 (. per sortir)");
                             entradaTeclat = scan.nextLine();
                             if (".".equals(entradaTeclat)) {
                                 //enviem al servidor l'ordre de tancar la connexió i acabem sense esperar resposta
@@ -94,15 +94,15 @@ public class GamePlayerClient {
                         System.out.println("Fi de connexió");
 
                     } catch (SocketException | EOFException ex) {
-                        System.out.println("ERROR: Servidor desconnectat" + ex);
+                        System.out.println("ERROR: Servidor desconnectat");
                     }
 
                 } catch (SocketException ex) {
-                    System.out.println("ERROR: No s'ha trobat el servidor" + ex);
+                    System.out.println("ERROR: No s'ha trobat el servidor");
                 }
 
             } catch (IOException ex) {
-                System.out.println("ERROR: Error llegint fitxer de configuració config.cfg" + ex);
+                System.out.println("ERROR: Error llegint fitxer de configuració config.cfg");
             }
 
         }

@@ -28,12 +28,13 @@ public class GameSimpleClient2 {
         String gameIP;
         int gamePort;
         
-        System.out.println("Test Game Server");
-
+        System.out.println("Game Simple Client");
+        System.out.println("==================\n");
+        
         //obtenim la ip i el port d'un fitxer de configuracio
         if (!new File(rutaConfigFile).isFile()) {
             //si no trobem el fitxer acabem
-            System.out.println("El fitxer de configuració config.cfg no existeix");
+            System.out.println("ERROR: El fitxer de configuració config.cfg no existeix");
         } else {
 
             BufferedReader reader;
@@ -53,7 +54,7 @@ public class GameSimpleClient2 {
                     //obtinguts del fitxer de configuració
 //                Socket socket = new Socket("localhost", 7000);
                     Socket socket = new Socket(gameIP, gamePort);
-                    System.out.println("## connexió correcta");
+                    
                     try {
                         // output stream per enviar missatges al servidor
                         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
@@ -82,15 +83,15 @@ public class GameSimpleClient2 {
                         System.out.println("Fi de connexió");
 
                     } catch (SocketException | EOFException ex) {
-                        System.out.println("ERROR: Servidor desconnectat" + ex);
+                        System.out.println("ERROR: Servidor desconnectat");
                     }
 
                 } catch (SocketException ex) {
-                    System.out.println("ERROR: No s'ha trobat el servidor" + ex);
+                    System.out.println("ERROR: No s'ha trobat el servidor");
                 }
 
             } catch (IOException ex) {
-                System.out.println("ERROR: Error llegint fitxer de configuració config.cfg" + ex);
+                System.out.println("ERROR: Error llegint fitxer de configuració config.cfg");
             }
 
         }

@@ -68,7 +68,7 @@ public class GameServer {
                                 
                                 //comprovem si ja hi ha el màxim numero de premis
                                 if (premis.countPremis() == GestioPremis.MAX_PREMIS) {
-                                    resposta = "MAXIMA QUANTITAT DE PREMIS (TOTAL " + premis.countPremis() + " premis)";
+                                    resposta = "MÀXIMA QUANTITAT DE PREMIS (TOTAL " + premis.countPremis() + " PREMIS)";
                                 } else {
                                     //Obtenim la posició i comprovem que esta entre 0 i 9
                                     // Del string ordre agafem el substring de la posicio 3 fins el final
@@ -83,7 +83,7 @@ public class GameServer {
                                              System.out.println("Ordre a executar PUT, posició " + posString);
                                             //si la posicio es vàlida, afegim el premi
                                             if (premis.afegirPremi(posInt)) {
-                                                resposta = "NOU PREMI AFEGIT A LA POSICIO " + posString + " (TOTAL " + premis.countPremis() + " PREMIS)";
+                                                resposta = "NOU PREMI AFEGIT A LA POSICIÓ " + posString + " (TOTAL " + premis.countPremis() + " PREMIS)";
                                             } else {
                                                 resposta = "NO S'HA AFEGIT EL PREMI (TOTAL " + premis.countPremis() + " PREMIS)";
                                             }
@@ -118,11 +118,11 @@ public class GameServer {
 
                                     } else {
                                          //posició numérica pero no vàlida
-                                        resposta = "ERROR: posicio incorrecta " + posString;
+                                        resposta = "ERROR: posició incorrecta " + posString;
                                     }
                                 } catch (NumberFormatException ex) {
                                      //excepció al passar de string a int
-                                    resposta = "ERROR: posicio no numérica " + posString;
+                                    resposta = "ERROR: posició no numérica " + posString;
                                 }
                             } else {
                                 //ordre no correspon ni a PUT ni GET ni QUIT
@@ -158,6 +158,7 @@ public class GameServer {
 
         } catch (BindException ex) {
             System.out.println("El port ja està agafat");
+            System.out.println("Excepció: " + ex);
 
         }
 

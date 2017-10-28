@@ -29,8 +29,8 @@ public class GameAdminClient {
         String gameIP;
         int gamePort;
 
-        System.out.println("Game Administration");
-        System.out.println("===================\n");
+        System.out.println("Administració del Joc");
+        System.out.println("=====================\n");
 
         //obtenim la ip i el port d'un fitxer de configuracio
         if (!new File(rutaConfigFile).isFile()) {
@@ -98,15 +98,15 @@ public class GameAdminClient {
                         System.out.println("Fi de connexió");
 
                     } catch (SocketException | EOFException ex) {
-                        System.out.println("ERROR: Servidor desconnectat" + ex);
+                        System.out.println("ERROR: Servidor desconnectat");
                     }
 
                 } catch (SocketException ex) {
-                    System.out.println("ERROR: No s'ha trobat el servidor" + ex);
+                    System.out.println("ERROR: No s'ha trobat el servidor");
                 }
 
             } catch (IOException ex) {
-                System.out.println("ERROR: Error llegint fitxer de configuració config.cfg" + ex);
+                System.out.println("ERROR: Error llegint fitxer de configuració config.cfg");
             }
 
         }
