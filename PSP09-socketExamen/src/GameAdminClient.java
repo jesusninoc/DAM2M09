@@ -80,7 +80,7 @@ public class GameAdminClient {
                                 if ((entradaTeclat.length() == 1) && entradaTeclat.matches("[0-9]")) {
 
                                     //envia l'ordre al servidor
-                                    dos.writeUTF("GET" + entradaTeclat);
+                                    dos.writeUTF("PUT" + entradaTeclat);
 
                                     //espera resposta del servidor
                                     respostaServidor = dis.readUTF();
