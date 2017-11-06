@@ -3,6 +3,7 @@ package cat.proven;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -73,29 +74,28 @@ public class SMTPClient {
         this.body = body;
     }
 
-    private void sendCommand(String command) {
-        System.out.println(command);
-        this.out.println(command);
-        this.out.flush();
+    private void sendCommand(final PrintWriter out, String command) {
+        out.println(command);
+        out.flush();
     }
 
-    private void sendMailMessage(String command) {
+    private void sendMailMessage(final PrintWriter out, String command) {
         System.out.println(command);
-        this.out.println(command);
+        out.println(command);
     }
 
-    private void sendEndOfMailMessage() {
+    private void sendEndOfMailMessage(final PrintWriter out) {
         System.out.println();
         System.out.println(".");
-        this.out.print("\r\n");
-        this.out.print(".\r\n");
-        this.out.print("\r\n");
-        this.out.flush();
+        out.print("\r\n");
+        out.print(".\r\n");
+//        out.print("\r\n");
+        out.flush();
     }
 
-    private void sendStartBody() {
+    private void sendStartBody(final PrintWriter out) {
         System.out.println();
-        this.out.println();
+        out.println();
     }
 
 // LOG d'un enviament de mail amb telnet
@@ -130,14 +130,14 @@ public class SMTPClient {
         boolean ok = true;
         String toSend;
         String received;
-        try {
+        try  {
 
             //InetAddress inetAddress = InetAddress.getByName(smtpServer);
             //Socket socket = new Socket(inetAddress, port);
             Socket socket = new Socket(smtpServer, port);
-            //socket.setSoTimeout(10000);
+            socket.setSoTimeout(10000);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream());
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 
             // el servidor contesta quan un client es connecta. Similar a:
             //220 proven ESMTP Sendmail 8.15.2/8.15.2/Debian-3; Fri, 3 Nov 2017 11:12:20 +0100; (No UCE/UBE) logging access from: localhost(OK)-localhost [127.0.0.1]
@@ -150,21 +150,21 @@ public class SMTPClient {
 
             //enviem SMTP ordre HELO i comprovem resposta sigui 2XX
             if (ok) {
-                sendCommand("HELO localhost");
+                sendCommand(out,"HELO localhost");
                 received = in.readLine();
                 System.out.println(received);
                 ok = received.startsWith("2");
             }
             //enviem SMTP ordre MAIL FROM: i comprovem resposta sigui 2XX
             if (ok) {
-                sendCommand("MAIL FROM: <" + sender + ">");
+                sendCommand(out,"MAIL FROM: <" + sender + ">");
                 received = in.readLine();
                 System.out.println(received);
                 ok = received.startsWith("250");
             }
             //enviem SMTP ordre RCPT TO: i comprovem resposta sigui 2XX
             if (ok) {
-                sendCommand("RCPT TO: <" + recipient + ">");
+                sendCommand(out,"RCPT TO: <" + recipient + ">");
                 received = in.readLine();
                 System.out.println(received);
                 ok = received.startsWith("250");
@@ -172,7 +172,7 @@ public class SMTPClient {
 
             //enviem SMTP ordre DATA i comprovem resposta sigui 2XX
             if (ok) {
-                sendCommand("DATA");
+                sendCommand(out,"DATA");
                 received = in.readLine();
                 System.out.println(received);
                 ok = received.startsWith("354");
@@ -181,22 +181,11 @@ public class SMTPClient {
             //enviem el contingut del mail, i acabem amb una linia amb un "."
             //comprovem la resposta del servidor sigui "2XX"
             if (ok) {
-                SimpleDateFormat dateFormatGmt = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
-                dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
-                sendMailMessage("Date: " + dateFormatGmt.format(new Date()));
-                sendMailMessage("From: <" + sender + ">");
-                sendMailMessage("To: <" + recipient + ">");
-                sendMailMessage("Subject: " + subject);
-                sendStartBody();
-                sendMailMessage(body);
-                sendEndOfMailMessage();
-                received = in.readLine();
-                System.out.println(received);
-                ok = received.startsWith("250");
+                ok = sendContentMail(out, in);
             }
 
             //finalitzem la connexió
-            sendCommand("QUIT");
+            sendCommand(out,"QUIT");
             received = in.readLine();
             System.out.println(received);
 
@@ -208,6 +197,24 @@ public class SMTPClient {
             Logger.getLogger(SMTPClient.class.getName()).log(Level.SEVERE, null, ex);
             ok = false;
         }
+        return ok;
+    }
+
+    private boolean sendContentMail(PrintWriter out1, BufferedReader in) throws IOException {
+        String received;
+        boolean ok;
+        SimpleDateFormat dateFormatGmt = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
+        dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+        sendMailMessage(out1,"Date: " + dateFormatGmt.format(new Date()));
+        sendMailMessage(out1,"From: <" + sender + ">");
+        sendMailMessage(out1,"To: <" + recipient + ">");
+        sendMailMessage(out1,"Subject: " + subject);
+        sendStartBody(out1);// start body
+        sendMailMessage(out1,body);       
+        sendEndOfMailMessage(out1);
+        received = in.readLine();
+        System.out.println(received);
+        ok = received.startsWith("250");
         return ok;
     }
     
