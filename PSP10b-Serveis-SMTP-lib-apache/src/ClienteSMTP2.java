@@ -33,10 +33,10 @@ public class ClienteSMTP2 {
 		    
 		    
 		      String origen="yo@localhost.es";
-		      String destino1="alumnouni5@gmail.com";
-		      String destino2="mariajesusramos@brianda.net";		      
+		      String destino1="mcast386@xtec.cat";
+		      String destino2="merceicas@gmail.com";		      
 		      String asunto="Prueba de SMTPClient";
-		      String mensaje = "Hola. \nEnviando saludos.\nChao.";
+		      String mensaje = "Hola. \nEnviando un mail de prueba.\nAdios.";
 		      
 		      //se crea la cabecera
 		      SimpleSMTPHeader cabecera = new SimpleSMTPHeader(origen, destino1, asunto);		      
