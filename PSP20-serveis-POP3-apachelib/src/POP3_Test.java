@@ -9,8 +9,8 @@ public class POP3_Test {
 //    static String password = "password";
 
     static String server = "localhost";
-    static String username = "myuser@mydomain.tld";
-    static String password = "mypassword";
+    static String username = "user01@james.local";
+    static String password = "1234";
     public static void main(String[] args) {
         String line;
 
@@ -23,7 +23,7 @@ public class POP3_Test {
             pop3.connect(server);
         } catch (IOException e) {
             System.err.println("Could not connect to server.");
-            e.printStackTrace();
+            //e.printStackTrace();
             System.exit(1);
         }
 
@@ -66,14 +66,16 @@ public class POP3_Test {
                 while ((line = reader.readLine()) != null) {
                     System.out.println(line);
                 }
+                
+                reader.close();
 
             }
 
             pop3.logout();
             pop3.disconnect();
         } catch (IOException e) {
-            e.printStackTrace();
-            return;
+            System.out.println("Error de E/S" + e);           
+            //e.printStackTrace();
         }
 
     }
