@@ -10,7 +10,7 @@ import java.net.BindException;
  *
  * @author alumne
  */
-public class EchoServer {
+public class EchoServer1 {
 
     /**
      *
@@ -20,6 +20,7 @@ public class EchoServer {
     public static void main(String[] args) throws Exception {
         String ordre;
         String resposta;
+        MailManteniment mailMant= new MailManteniment("localhost","aplicacio1@proven.cat","mantm09@yopmail.com");
 
         System.out.println("Echo Server");
         System.out.println("===========");
@@ -79,6 +80,8 @@ public class EchoServer {
         } catch (BindException ex) {
             System.out.println("ERROR: El port ja està agafat");
             System.out.println("Excepció: " + ex);
+            mailMant.enviarMail(ex);
+            
         }
     }
 }
