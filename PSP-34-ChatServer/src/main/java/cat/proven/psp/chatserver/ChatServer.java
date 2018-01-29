@@ -40,6 +40,9 @@ public class ChatServer {
             // i solicitem que el thread de sortida acabi
             input.join();
             output.stopThread();
+            
+
+            //output.interrupt();
              
             //esperem que el thread de sortida acabi 
             output.join();
