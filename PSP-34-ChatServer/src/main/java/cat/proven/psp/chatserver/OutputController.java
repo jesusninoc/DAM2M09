@@ -55,9 +55,9 @@ public class OutputController extends Thread {
                         // Llegim el que entrem per teclat (bloqueja i no rep la interrupcio)
                         entradaTeclat = br.readLine();
                     } else {
-                        //esperem 2 segons
+                        //esperem 200 milisegons
                         // sense acaparar 100% CPU, sleep() rep excepció Thread interrupt 
-                        sleep(2000);
+                        sleep(200);
                     }
                 }
 
