@@ -1,4 +1,4 @@
-package cat.proven.psp.chatserver;
+package cat.proven.psp.xatserver;
 
 import java.io.DataInputStream;
 import java.net.*;
@@ -10,7 +10,7 @@ import java.net.*;
  *
  * @author alumne
  */
-public class InputController extends Thread {
+public class InputSocketController extends Thread {
 
     Socket socket;
     String user;
@@ -21,7 +21,7 @@ public class InputController extends Thread {
      * @param socket socket d'on llegirem
      * @param user Nom usuari
      */
-    public InputController(Socket socket, String user) {
+    public InputSocketController(Socket socket, String user) {
         this.socket = socket;
         this.user = user;
     }
@@ -43,11 +43,11 @@ public class InputController extends Thread {
                 // Ho mostra per pantalla
                 System.out.println(user + " said: " + s);
             }
+            System.out.println("InputSocketController: Finalitzar");
         } catch (SocketException ex) {
-            System.out.println("Input controller: Desconnectat");
+            System.out.println("InputSocketController: Socket desconnectat");
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("InputSocketController: Excepció -> " + ex.getMessage());
         }
-        System.out.println("Client desconectat...");
     }
 }

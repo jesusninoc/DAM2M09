@@ -1,4 +1,4 @@
-package cat.proven.psp.chatserver;
+package cat.proven.psp.xatserver;
 
 import java.io.BufferedReader;
 import java.net.Socket;
@@ -12,10 +12,13 @@ import java.net.*;
  * socket.
  *
  * Per finalitzar s'ha d'executar el mètode stopThread()
+ * 
+ * Llegim del teclat de forma que no quedi bloquejat, i rebi la sol·licitud d'aturar
+ * el thread
  *
  * @author alumne
  */
-public class OutputController extends Thread {
+public class OutputSocketController extends Thread {
 
     private Socket socket;
     private boolean stop = false;
@@ -25,7 +28,7 @@ public class OutputController extends Thread {
      *
      * @param socket socket on escriura
      */
-    public OutputController(Socket socket) {
+    public OutputSocketController(Socket socket) {
         this.socket = socket;
     }
 
@@ -66,13 +69,13 @@ public class OutputController extends Thread {
                     dos.writeUTF(entradaTeclat);
                 }
             }
-            System.out.println("Output Controller: Finalitzat");
+            System.out.println("OutputSocketController: Finalitzat");
         } catch (SocketException ex) {
-            System.out.println("Output Controller: Desconnectat");
+            System.out.println("OutputSocketController: Desconnectat");
         } catch (InterruptedException e2) {
-            System.out.println("Output Controller: Interrumpit");
+            System.out.println("OutputSocketController: Interrumpit");
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("OutputSocketController: Excepció -> " + ex.getMessage());
         }
     }
 

@@ -1,4 +1,4 @@
-package cat.proven.psp.chatserver;
+package cat.proven.psp.xatserver;
 
 import java.net.*;
 
@@ -8,7 +8,7 @@ import java.net.*;
  *  es quedi bloquejat esperant rebre una dada de teclat o una dada del socket.
  * @author alumne
  */
-public class ChatServer {
+public class XatServer {
 
     /**
      *  Programa principal
@@ -17,6 +17,8 @@ public class ChatServer {
      */
     public static void main(String[] args) throws Exception {
 
+        System.out.println("Xat Server");
+        System.out.println("----------");
         // Arranquem el server Socket		
         ServerSocket server = new ServerSocket(9000);
         System.out.println("Server is started");
@@ -29,11 +31,11 @@ public class ChatServer {
             System.out.println("Client connectat: " + socket.getLocalAddress() + ":" + socket.getPort());
 
             // Creem un thread per controlar el que el client ens envia pel socket
-            InputController input = new InputController(socket, "Client");
+            InputSocketController input = new InputSocketController(socket, "Client");
             input.start();
 
             // Creem un thread per enviar el que entrem per teclat cap al Socket
-            OutputController output = new OutputController(socket);
+            OutputSocketController output = new OutputSocketController(socket);
             output.start();
 
             //esperem que el thread d'entrada acabi (el client tanca la connexió quan escriu un ".")
