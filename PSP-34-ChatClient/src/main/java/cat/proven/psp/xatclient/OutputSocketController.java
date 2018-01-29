@@ -1,4 +1,4 @@
-package cat.proven.psp.chatclient;
+package cat.proven.psp.xatclient;
 
 import java.net.Socket;
 import java.util.Scanner;
@@ -13,7 +13,7 @@ import java.net.*;
  *
  * @author alumne
  */
-public class OutputController extends Thread {
+public class OutputSocketController extends Thread {
 
     private Socket socket;
 
@@ -21,7 +21,7 @@ public class OutputController extends Thread {
      *
      * @param socket
      */
-    public OutputController(Socket socket) {
+    public OutputSocketController(Socket socket) {
 
         this.socket = socket;
     }
@@ -46,12 +46,12 @@ public class OutputController extends Thread {
                 dos.writeUTF(entradaTeclat);
 
             }
-
-            System.out.println("Desconnectant...");
+            System.out.println("OutputSocketController: finalitzar connexió");
+            
         } catch (SocketException ex) {
-            System.out.println("Output Controller: Desconnectat");
+            System.out.println("OutputSocketController: canal desconnectat");
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("OutputSocketController: Excepció -> " + ex.getMessage());
         }
 
     }

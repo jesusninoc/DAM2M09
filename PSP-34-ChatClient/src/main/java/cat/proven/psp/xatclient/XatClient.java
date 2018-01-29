@@ -1,4 +1,4 @@
-package cat.proven.psp.chatclient;
+package cat.proven.psp.xatclient;
 
 import java.net.Socket;
 
@@ -9,7 +9,7 @@ import java.net.Socket;
  * 
  * @author alumne
  */
-public class ChatClient {
+public class XatClient {
 
     /**
      * 
@@ -17,18 +17,19 @@ public class ChatClient {
      */
     public static void main(String[] args) {
         try {
-
+            System.out.println("Chat Client");
+            System.out.println("-----------");
             // Creem un socket on ens connectem
             Socket socket = new Socket("localhost", 9000);
             System.out.println("Connectat");
             
             // Creem un thread per controlar el que entra pel socket
             // i ho mostra per pantalla
-            InputController input = new InputController(socket, "Server");
+            InputSocketController input = new InputSocketController(socket, "Server");
             input.start();
 
             // Creem un altre thread per controlar el que enviarem pel socket
-            OutputController output = new OutputController(socket);
+            OutputSocketController output = new OutputSocketController(socket);
             output.start();
 
             //esperem que acabi el thread que llegeix de teclat, 
