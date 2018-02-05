@@ -4,8 +4,8 @@ import java.io.DataInputStream;
 import java.net.*;
 
 /**
- * Xat Server. Thread que llegeix del stream d'entrada del socket
- *  i la mostra per pantalla
+ * Thread que llegeix del stream d'entrada del socket
+ *  i la mostra per pantalla, a la Part Servidora del Xat.
  * Acaba quan rep un "."
  *
  * @author alumne
@@ -34,10 +34,10 @@ public class InputSocketController extends Thread {
     public void run() {
         try {
             String s = "";
+            //obté el canal d'entrada del socket
+            DataInputStream din = new DataInputStream(socket.getInputStream());
             while (!s.equals(".")) {
-
-                // LLegeix el que entra pel socket
-                DataInputStream din = new DataInputStream(socket.getInputStream());
+                // LLegeix el que entra pel socket              
                 s = din.readUTF();
 
                 // Ho mostra per pantalla

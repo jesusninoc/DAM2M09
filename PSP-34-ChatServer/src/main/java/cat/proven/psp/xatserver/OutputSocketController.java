@@ -8,13 +8,10 @@ import java.io.InputStreamReader;
 import java.net.*;
 
 /**
- * Xat Server. Thread que llegeix del teclat i escriu al stream de sortida del
- * socket.
- *
- * Per finalitzar s'ha d'executar el mètode stopThread()
- * 
- * Llegim del teclat de forma que no quedi bloquejat, i rebi la sol·licitud d'aturar
- * el thread
+ * Thread que llegeix del teclat i escriu al stream de sortida del socket, a la
+ * Part Servidora del Xat. Per finalitzar s'ha d'executar el mètode
+ * stopThread(). (La lectura del teclat es fa de forma no bloquejant, per poder
+ * tractar la sol·licitud d'aturar el thread)
  *
  * @author alumne
  */
@@ -24,7 +21,7 @@ public class OutputSocketController extends Thread {
     private boolean stop = false;
 
     /**
-     * Constructor
+     * Constructor del thread
      *
      * @param socket socket on escriura
      */
@@ -32,41 +29,49 @@ public class OutputSocketController extends Thread {
         this.socket = socket;
     }
 
+    /**
+     * Codi que se executa de forma concurrent: Llegeix del teclat i ho envia
+     * pel socket. Llegeix del teclat amb BufferedReader (de forma no
+     * bloquejant) I escriu al stream de sortida del socket el que llegeix de
+     * teclat. Es fa continuament (en un bucle) acaba quan el flag 'stop' està
+     * activat
+     */
     @Override
     public void run() {
-        //Canviem Scanner per BufferedReader que te metodes no bloquejants
-        //Scanner scan = new Scanner(System.in);
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         String entradaTeclat = "";
+        boolean textLLegit = false;
         try {
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+
+            //Comentat.Canviat Scanner per BufferedReader que té metodes no bloquejants
+            //Scanner scan = new Scanner(System.in);
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             while (!this.stop) {
 
-                // Llegim el que entrem per teclat (bloqueja)
+                // Comentat.Canviat Scanner per BufferedReader
                 //entradaTeclat = scan.nextLine();
                 
-                //Canviem la forma de llegir del teclat per no quedarnos bloquejats:
-                // ho fem amb BufferedReader que te metodes no bloquejants
-                //comprovem primer si hi ha alguna cosa a llegir
-                // sino esperem amb sleep (no ocupem CPU), sleep és interrumpible
-                // i per altra banda al acabar comprovarem la var stop
-                boolean nextLine = false;
-                while (!this.stop && !nextLine) {
-                    //Comprovem si hi ha alguna cosa a llegir (no bloqueja)
+                // LLegeix del teclat amb un timer, 
+                // i així comprovar el flag 'stop' a cada timer.
+                textLLegit = false;
+                while (!this.stop && !textLLegit) {
+                    //Comprova si hi ha alguna cosa a llegir (no bloqueja)
                     if (br.ready()) {
-                        nextLine = true;
-                        // Llegim el que entrem per teclat (bloqueja i no rep la interrupcio)
+                        // Llegeix el que l'usuari escriu pel teclat (bloqueja i no rep la interrupcio)
                         entradaTeclat = br.readLine();
+                        textLLegit=true;
                     } else {
-                        //esperem 200 milisegons
-                        // sense acaparar 100% CPU, sleep() rep excepció Thread interrupt 
+                        //espera 200 milisegons, amb sleep()
+                        // sleep() no ocupa CPU, sleep() pot rebre l'excepció Thread interrupt 
                         sleep(200);
                     }
                 }
 
-                //Ho enviem pel socket
+                //Envia pel socket el text rebut pel teclat
                 if (!this.stop) {
                     dos.writeUTF(entradaTeclat);
+                    
                 }
             }
             System.out.println("OutputSocketController: Finalitzat");
@@ -80,7 +85,7 @@ public class OutputSocketController extends Thread {
     }
 
     /**
-     * aturar el thread, per mitjà d'una variable
+     * Atura el thread per mitjà d'una variable (el flag 'stop')
      */
     public void stopThread() {
         this.stop = true;
