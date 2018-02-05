@@ -37,11 +37,12 @@ public class InputSocketController extends Thread {
         try {
 
             String s;
+            
+            //obtenim el canal d'entrada del socket
+            DataInputStream din = new DataInputStream(socket.getInputStream());
+            
             while (true) {
-
-                // LLegeix el que entra pel socket
-                DataInputStream din = new DataInputStream(socket.getInputStream());
-
+                 // LLegeix el que entra pel socket
                 s = din.readUTF();
 
                 // Ho mostra per pantalla
