@@ -13,48 +13,63 @@ import java.util.LinkedList;
  * @author carlos
  */
 public class Parking {
-    
+
     private int maxplaces;
-    private ArrayList<places> list = new ArrayList<>();
- 
+    private ArrayList<Places> list = new ArrayList<>();
+
+    /**
+     *
+     * @param maxplaces
+     */
     public Parking(int maxplaces) {
-        if (maxplaces < 0)
+        if (maxplaces < 0) {
             maxplaces = 0;
+        }
         this.maxplaces = maxplaces;
     }
- 
+
+    /**
+     *
+     * @param cotxe
+     */
     public synchronized void entra(String cotxe) { // cotxe entra al pàrquing
-    while (list.size() == maxplaces) {
-    try {
-    System.out.println( cotxe + ": esperant, pàrquing ple.");
-    wait();
-    } catch (InterruptedException e) {}
+        while (list.size() == maxplaces) {
+            try {
+                System.out.println(cotxe + ": esperant, pàrquing ple.");
+                wait();
+            } catch (InterruptedException e) {
+            }
+        }
+        System.out.println(cotxe + ": entra al pàrquing");
+        list.add(new Places(cotxe, 1));
+        System.out.println(maxplaces - list.size() + ": places lliures");
     }
-    System.out.println(cotxe + ": entra al pàrquing");
-    list.add(new places(cotxe,1));
-    System.out.println(maxplaces-list.size() + ": places lliures");
-    }
- 
+
+    /**
+     *
+     * @param cotxe
+     */
     public synchronized void surt(String cotxe) { // el coche deixa el pàrquing
 
-    int preu=0;
-    for (int i=0;i<list.size();i++){
-        if (list.get(i).getMatricula().equals(cotxe)){
-            preu = list.get(i).getPreu();
-            list.remove(i);
-            break;
+        int preu = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getMatricula().equals(cotxe)) {
+                preu = list.get(i).getPreu();
+                list.remove(i);
+                break;
+            }
         }
+        System.out.println(cotxe + " surt. Pagant " + Integer.toString(preu) + " Plaça alliberada.");
+        System.out.println(maxplaces - list.size() + ": places lliures");
+        notifyAll();
     }
-        System.out.println(cotxe + " surt. Pagant"+ Integer.toString(preu) +" Plaça alliberada.");
-    System.out.println(maxplaces-list.size() + ": places lliures");
-    notifyAll();
-    }
-    
-    public synchronized void augmentapreus()
-    {
-        for (places r : list)
-        {
-            r.setPreu(r.getPreu()+1);
+
+    /**
+     *
+     */
+    public synchronized void augmentapreus() {
+        for (Places r : list) {
+            r.setPreu(r.getPreu() + 1);
         }
         System.out.println("El cobrador ha passat");
     }

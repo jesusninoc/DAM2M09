@@ -3,37 +3,46 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlparking;
+package cat.proven.psp.controlparking.hashmap;
 
 /**
  *
  * @author carlos
  */
-public class Cotxe extends Thread{
+public class Cotxe extends Thread {
+
     private Parking parking;
     private String matricula;
+
+    /**
+     *
+     * @param matricula
+     * @param p
+     */
     public Cotxe(String matricula, Parking p) {
-    this.matricula = matricula;
-    this.parking = p;
-            
-    start();
+        this.matricula = matricula;
+        this.parking = p;
+
+        start();
     }
- 
+
+    @Override
     public void run() {
         while (true) {
-           
+
             try {
-            sleep((int)(Math.random() * 10000)); // Parar abans d'entrar al pàrquing
-            } catch (InterruptedException e) {}
+                sleep((int) (Math.random() * 10000)); // Parar abans d'entrar al pàrquing
+            } catch (InterruptedException e) {
+            }
 
             parking.entra(this.matricula);
-           
 
             try {
-            sleep((int)(Math.random() * 20000)); // Simular estada esperant un temps aleatori
-            } catch (InterruptedException e) {}
+                sleep((int) (Math.random() * 20000)); // Simular estada esperant un temps aleatori
+            } catch (InterruptedException e) {
+            }
 
             parking.surt(this.matricula);
-          }
-       }
+        }
+    }
 }

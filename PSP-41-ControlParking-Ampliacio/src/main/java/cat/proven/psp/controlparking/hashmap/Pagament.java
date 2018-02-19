@@ -3,28 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlparking;
+package cat.proven.psp.controlparking.hashmap;
 
 /**
  *
  * @author alume
  */
-public class Pagament extends Thread{
+public class Pagament extends Thread {
 
     private Parking p;
-    
-    public Pagament(Parking p){
-        this.p=p;
+
+    /**
+     *
+     * @param p
+     */
+    public Pagament(Parking p) {
+        this.p = p;
         start();
     }
- 
+
+    @Override
     public void run() {
         while (true) {
-            
+
             try {
-                sleep((int)(1000)); // Simular estada esperant un temps aleatori
-            } catch (InterruptedException e) {}
+                sleep((int) (1000)); // Simular estada esperant un temps aleatori
+            } catch (InterruptedException e) {
+            }
             p.augmentapreus();
         }
-        }
+    }
 }

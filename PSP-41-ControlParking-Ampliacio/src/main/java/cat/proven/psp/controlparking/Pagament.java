@@ -18,6 +18,7 @@ public class Pagament extends Thread{
         start();
     }
  
+    @Override
     public void run() {
         while (true) {
             

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlparking;
+package cat.proven.psp.controlparking.hashmap;
 
 /**
  *
@@ -16,10 +16,10 @@ public class ControlParking {
      */
     public static void main(String[] args) {
         Parking parking = new Parking(3);
-        for (int i=1; i<= 4; i++) {
-        Cotxe c = new Cotxe("Cotxe matrícula " + i, parking);
+        for (int i = 1; i <= 4; i++) {
+            Cotxe c = new Cotxe("Cotxe matrícula " + i, parking);
         }
         Pagament p = new Pagament(parking);
     }
-    
+
 }
