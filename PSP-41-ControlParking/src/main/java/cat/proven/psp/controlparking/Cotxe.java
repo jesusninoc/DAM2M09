@@ -27,18 +27,26 @@ public class Cotxe extends Thread{
     public void run() {
         while (true) {
            
-            try {
-            sleep((int)(Math.random() * 10000)); // Parar abans d'entrar al pàrquing
-            } catch (InterruptedException e) {}
+            doncUnPasseig();
 
             parking.entra(this.matricula);
            
 
-            try {
-            sleep((int)(Math.random() * 20000)); // Simular estada esperant un temps aleatori
-            } catch (InterruptedException e) {}
+            unaEstonaAparcat();
 
             parking.surt(this.matricula);
           }
        }
+
+    private void unaEstonaAparcat() {
+        try {
+            sleep((int)(Math.random() * 20000)); // Simular estada esperant un temps aleatori
+        } catch (InterruptedException e) {}
+    }
+
+    private void doncUnPasseig() {
+        try {
+            sleep((int)(Math.random() * 10000)); // Parar abans d'entrar al pàrquing
+        } catch (InterruptedException e) {}
+    }
 }
