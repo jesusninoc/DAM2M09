@@ -12,6 +12,12 @@ package cat.proven.psp.controlparking;
 public class Cotxe extends Thread{
     private Parking parking;
     private String matricula;
+
+    /**
+     *
+     * @param matricula
+     * @param p
+     */
     public Cotxe(String matricula, Parking p) {
     this.matricula = matricula;
     this.parking = p;

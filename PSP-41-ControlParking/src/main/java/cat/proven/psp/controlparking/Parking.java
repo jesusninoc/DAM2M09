@@ -10,31 +10,45 @@ package cat.proven.psp.controlparking;
  * @author carlos
  */
 public class Parking {
-    
+
     private int places;
- 
+
+    /**
+     *
+     * @param places
+     */
     public Parking(int places) {
-        if (places < 0)
+        if (places < 0) {
             places = 0;
+        }
         this.places = places;
     }
- 
+
+    /**
+     *
+     * @param cotxe
+     */
     public synchronized void entra(String cotxe) { // cotxe entra al pàrquing
-    while (places == 0) {
-    try {
-    System.out.println( cotxe + ": esperant, pàrquing ple.");
-    wait();
-    } catch (InterruptedException e) {}
+        while (places == 0) {
+            try {
+                System.out.println(cotxe + ": esperant, pàrquing ple.");
+                wait();
+            } catch (InterruptedException e) {
+            }
+        }
+        System.out.println(cotxe + ": entra al pàrquing");
+        places--;
+        System.out.println(places + ": places lliures");
     }
-    System.out.println(cotxe + ": entra al pàrquing");
-    places--;
-    System.out.println(places + ": places lliures");
-    }
- 
+
+    /**
+     *
+     * @param cotxe
+     */
     public synchronized void surt(String cotxe) { // el coche deixa el pàrquing
-    System.out.println(cotxe + " surt. Plaça alliberada.");
-    places++;
-    System.out.println(places + ": places lliures");
-    notifyAll();
+        System.out.println(cotxe + " surt. Plaça alliberada.");
+        places++;
+        System.out.println(places + ": places lliures");
+        notifyAll();
     }
 }
