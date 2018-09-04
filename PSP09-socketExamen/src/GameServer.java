@@ -8,7 +8,7 @@ import java.net.BindException;
 
 /**
  *
- * @author alumne
+ * @author alumne - canvi
  */
 public class GameServer {
 
