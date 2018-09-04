@@ -7,7 +7,7 @@ import java.net.SocketException;
 import java.util.Scanner;
 
 /**
- * * * @author alumne
+ * * * @author alumne - canvi2
  */
 public class GameSimpleClient {
 
